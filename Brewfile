@@ -23,6 +23,7 @@ brew 'git-duet'
 cask 'font-fira-code'
 cask 'font-inconsolata'
 
+cask 'emacs'
 brew 'tmux'
 brew 'macvim'
 brew 'httpie'

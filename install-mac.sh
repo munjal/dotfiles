@@ -24,7 +24,7 @@ if ! command -v brew >/dev/null; then
     export PATH="/usr/local/bin:$PATH"
 fi
 
-if [-d ~/.ssh/id_rsa]
+if [-f "~/.ssh/id_rsa"]
 then
   fancy_echo "Installing git keys"
   fancy_echo "What name would you want in your Git commit messages?"
@@ -59,12 +59,16 @@ fi
 fancy_echo "Installing brew bundles..."
 brew bundle
 
+fancy_echo "Installing spacemacs"
+git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+
 fancy_echo "Installing asdf"
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf
 cd ~/.asdf
 git checkout "$(git describe --abbrev=0 --tags)"
 
-. $HOME/.zshrc
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
 
 find_latest_asdf() {
   asdf list-all "$1" | grep -v - | tail -1 | sed -e 's/^ *//'
@@ -87,9 +91,14 @@ install_asdf_plugin() {
 }
 
 fancy_echo "Installing asdf plugins"
+export KERL_CONFIGURE_OPTIONS="--disable-debug --without-javac"
 install_asdf_plugin erlang
+
 install_asdf_plugin elixir
 
-curl -Lo /Applications/Visual\ Studio\ Code.zip https://update.code.visualstudio.com/1.31.1/darwin/stable
-tar -xf /Applications/Visual\ Studio\ Code.zip
+if [ ! -d "/Application Visual Studio/Code.app"]
+then
+    curl -Lo /Applications/Visual\ Studio\ Code.zip https://update.code.visualstudio.com/1.31.1/darwin/stable
+    tar -xf /Applications/Visual\ Studio\ Code.zip
+fi
 

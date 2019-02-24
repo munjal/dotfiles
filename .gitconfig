@@ -1,0 +1,71 @@
+[color]
+        ui = true
+  
+[alias]
+	co = checkout
+        ci = commit -m
+	st = status -sb
+
+        cs = "!f() { EDITOR=vim git commit --author=\""${1}" <$(git config user.email)>\" -e -m \"$(cat ~/.git_commit_msg.txt | sed 's/DDD/\\[#'$2'\\]/g')\"; }; f"
+        pair = "!f() { EDITOR=vim git duet-commit -e -m \"$(cat ~/.git_commit_msg.txt | sed 's/DDD/\\[#'$2'\\]/g')\"; }; f"
+        
+        b = branch
+	
+        ps = push
+	psb = "!f() { git push -u origin $(git rev-parse --abbrev-ref HEAD); }; f"
+        
+	prb = pull -r
+        prbm = pull --rebase origin master
+        
+        ap = add -pa
+
+	mff = "!f() { git merge "$1" --no-ff --no-edit; }; f"
+
+	ssu = stash -u
+        ss = stash
+        ssp = stash pop
+	
+        l = log --graph --abbrev-commit --date=relative
+        ll = log --graph --abbrev-commit --date=relative --name-status
+        lp = log --graph --abbrev-commit --date=relative -p
+	
+        boom = clean -fd
+	
+        r = reset HEAD
+	rh = reset HEAD~1
+	
+        dc = diff --cached
+        d = diff
+        db = !git branch | cut -d ' ' -f 3 | xargs git branch -D | git co master
+	dsf = "!f() { [ -z \"$GIT_PREFIX\" ] || cd \"$GIT_PREFIX\" && git diff --color \"$@\" | diff-so-fancy  | less --tabs=4 -RFX; }; f"
+	pb = "!f() { git push -u origin $(git rev-parse --abbrev-ref HEAD); }; f"
+
+	
+	
+
+[format]
+        pretty=format:%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
+[core]
+	pager = diff-so-fancy | less --tabs=4 -RFX
+	
+[grep]
+	lineNumber = true
+	
+[push]
+	default = upstream
+
+[pull]
+  rebase = true
+
+[commit]
+	gpgsign = true
+
+[rebase]
+	gpgsign = true
+
+[branch]
+	autosetuprebase = always
+[http]
+	sslVerify = true
+[fetch]
+	prune = true

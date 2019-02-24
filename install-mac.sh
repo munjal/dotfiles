@@ -6,6 +6,10 @@ fancy_echo() {
   printf "\n$fmt\n" "$@"
 }
 
+function config {
+    /usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME $@  
+}
+
 fancy_echo "Installing ohh-my-zsh"
 if [ ! -d "$HOME/.oh-my-zsh" ]
 then

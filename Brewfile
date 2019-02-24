@@ -26,12 +26,10 @@ cask 'font-inconsolata'
 brew 'tmux'
 brew 'macvim'
 brew 'httpie'
-#cask 'iterm2'
+cask 'iterm2'
 cask 'atom'
 
 brew 'yarn'
-
-brew 'asdf'
 
 brew 'python3'
 

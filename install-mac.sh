@@ -14,6 +14,8 @@ if ! command -v brew >/dev/null; then
     curl -fsS \
       'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
 
+    config checkout ~/.zshrc
+
     append_to_zshrc '# recommended by brew doctor'
 
     append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
@@ -22,38 +24,47 @@ if ! command -v brew >/dev/null; then
     export PATH="/usr/local/bin:$PATH"
 fi
 
-fancy_echo "Installing git keys"
-fancy_echo "What name would you want in your Git commit messages?"
-read github_name
-fancy_echo "What's your email address associated with Github?"
-read github_email
+if [-d ~/.ssh/id_rsa]
+then
+  fancy_echo "Installing git keys"
+  fancy_echo "What name would you want in your Git commit messages?"
+  read github_name
+  fancy_echo "What's your email address associated with Github?"
+  read github_email
 
-fancy_echo "Writing to ~/.gitconfig"
-echo "
-[user]
-        name = $github_name
-        email = $github_email
-   " >> ~/.gitconfig
+  fancy_echo "Writing to ~/.gitconfig"
+  echo "
+  [user]
+          name = $github_name
+          email = $github_email
+     " >> ~/.gitconfig
 
 
-fancy_echo "Generating & configuringssh keys"
-ssh-keygen -t rsa -b 4096 -C $github_email -N "" -f ~/.ssh/id_rsa
-eval "$(ssh-agent -s)"
+  fancy_echo "Generating & configuringssh keys"
+  ssh-keygen -t rsa -b 4096 -C $github_email -N "" -f ~/.ssh/id_rsa
+  eval "$(ssh-agent -s)"
 
-touch ~/.ssh/config
-echo "Host *
-   AddKeysToAgent yes
-   UseKeychain yes
-   IdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config
-   
-ssh-add -K ~/.ssh/id_rsa
+  touch ~/.ssh/config
+  echo "Host *
+     AddKeysToAgent yes
+     UseKeychain yes
+     IdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config
 
-fancy_echo "Please copy your ssh public keys to github"
-open https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account
+  ssh-add -K ~/.ssh/id_rsa
 
+  fancy_echo "Please copy your ssh public keys to github"
+  open https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account
+fi
 
 fancy_echo "Installing brew bundles..."
 brew bundle
+
+fancy_echo "Installing asdf"
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf
+cd ~/.asdf
+git checkout "$(git describe --abbrev=0 --tags)"
+
+. $HOME/.zshrc
 
 find_latest_asdf() {
   asdf list-all "$1" | grep -v - | tail -1 | sed -e 's/^ *//'
@@ -67,8 +78,6 @@ fancy_echo "Adding asdf plugins"
 asdf_plugin_present elixir || asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git
 asdf_plugin_present erlang || asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git
 asdf_plugin_present nodejs || asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
-asdf_plugin_present python || asdf plugin-add python https://github.com/danhper/asdf-python.git
-
 
 install_asdf_plugin() {
     plugin_version=$(find_latest_asdf $1)

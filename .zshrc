@@ -24,13 +24,6 @@ function pair() {
 
 autoload bashcompinit && bashcompinit
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-source ~/.bin/tmuxinator.zsh
 source <(kubectl completion zsh)
 
 # The next line updates PATH for the Google Cloud SDK.

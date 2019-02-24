@@ -42,7 +42,6 @@ brew 'diff-so-fancy'
 mas 'Numbers', id: 409203825
 mas 'Pages', id: 409201541
 mas 'Slack', id: 803453959
-mas 'Skitch', id: 425955336
 mas '1password', id: 1333542190
 
 cask 'google-chrome'

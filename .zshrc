@@ -24,6 +24,9 @@ function pair() {
 
 autoload bashcompinit && bashcompinit
 
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
+
 source <(kubectl completion zsh)
 
 # The next line updates PATH for the Google Cloud SDK.

@@ -21,6 +21,7 @@ if ! command -v brew >/dev/null; then
     curl -fsS \
       'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
 
+    change this... not working
     config checkout $HOME/.zshrc
 
     append_to_zshrc '# recommended by brew doctor'
@@ -120,4 +121,11 @@ if [ ! -d "/Applications/Docker.app" ]
 then
     curl -Lo Downloads/Docker.dmg  https://download.docker.com/mac/stable/Docker.dmg
     open Downloads/Docker.dmg
+fi
+
+fancy_echo "Installing Google Chat"
+if [ ! -d "/Applications/Chat.app" ]
+then
+    curl -Lo Downloads/InstallHangoutsChat.dmg https://dl.google.com/chat/latest/InstallHangoutsChat.dmg
+    open Downloads/InstallHangoutsChat.dmg
 fi

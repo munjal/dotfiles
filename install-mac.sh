@@ -1,5 +1,57 @@
 #!/bin/sh
 
+# TODO:
+# [ ] acept configs from the command line
+# [x] install xcode-tools from command line: https://railsapps.github.io/xcode-command-line-tools.html
+# [x] create_user automatically (with admin powers)
+# [x] enable ssh service
+# [x] set hostname (matching the user name, to make easy to find the computer)
+
+username="test"
+userfullname="Testing Test"
+
+parse_command_line()
+{
+    echo "(TODO) Parsing command lines..."
+}
+
+install_xcode_cli_tools()
+{
+    xcode-select -p # test
+    xcode-select --install
+}
+
+create_user()
+{
+    sysadminctl \
+        -addUser "$username" \
+        -fullName "$userfullname" \
+        -password "$username" \
+        -hint "$username" \
+        -admin
+}
+
+enable_ssh()
+{
+    systemsetup -f -setremotelogin on
+}
+
+set_hostname()
+{
+    sudo scutil --set ComputerName $username
+    dscacheutil -flushcache
+}
+
+# =====================================================================
+
+parse_command_line
+install_xcode_cli_tools
+create_user
+enable_ssh
+set_hostname
+
+# =====================================================================
+
 fancy_echo() {
     local fmt="$1"; shift
     printf "\n$fmt\n" "$@"
@@ -9,7 +61,7 @@ function config {
     /usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME $@
 }
 
-fancy_echo "Installing ohh-my-zsh"
+fancy_echo "Installing oh-my-zsh"
 if [ ! -d "$HOME/.oh-my-zsh" ]
 then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"

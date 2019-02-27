@@ -13,17 +13,26 @@ userfullname="Testing Test"
 parse_command_line()
 {
     echo "(TODO) Parsing command lines..."
+    username
+    userfullname
 }
 
 install_xcode_cli_tools()
 {
-    xcode-select -p # test
-    xcode-select --install
+    xcode-select --install; sleep 1; \
+#     osascript << EOD
+#       tell application "System Events"
+#         tell process "Install Command Line Developer Tools"
+#           keystroke return
+#           click button "Agree" of window "License Agreement"
+#         end tell
+#       end tell
+#     EOD
 }
 
 create_user()
 {
-    sysadminctl \
+    sudo sysadminctl \
         -addUser "$username" \
         -fullName "$userfullname" \
         -password "$username" \
@@ -33,7 +42,7 @@ create_user()
 
 enable_ssh()
 {
-    systemsetup -f -setremotelogin on
+    sudo  systemsetup -f -setremotelogin on
 }
 
 set_hostname()

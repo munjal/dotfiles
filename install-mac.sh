@@ -179,13 +179,13 @@ fi
 fancy_echo "Installing Docker"
 if [ ! -d "/Applications/Docker.app" ]
 then
-    curl -Lo Downloads/Docker.dmg  https://download.docker.com/mac/stable/Docker.dmg
+    curl -o ~/Downloads/Docker.dmg  https://download.docker.com/mac/stable/Docker.dmg
     open Downloads/Docker.dmg
 fi
 
 fancy_echo "Installing Google Chat"
 if [ ! -d "/Applications/Chat.app" ]
 then
-    curl -Lo Downloads/InstallHangoutsChat.dmg https://dl.google.com/chat/latest/InstallHangoutsChat.dmg
+    curl -o ~/Downloads/InstallHangoutsChat.dmg https://dl.google.com/chat/latest/InstallHangoutsChat.dmg
     open Downloads/InstallHangoutsChat.dmg
 fi

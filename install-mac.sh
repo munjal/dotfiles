@@ -5,7 +5,7 @@ fancy_echo()
     printf "\n\n>> %s\n" "$@"
 }
 
-config_git()
+git_mod config_git()
 {
     /usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME $@
 }
@@ -21,7 +21,7 @@ if ! command -v brew >/dev/null; then
     curl -fsS \
         'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
 
-    config_git checkout -- $HOME/.zshrc
+    git_mod checkout -- $HOME/.zshrc
 
     echo >> $HOME/.zshrc
     echo '# Recommended by brew doctor' >> $HOME/.zshrc

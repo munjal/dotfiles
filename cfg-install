@@ -1,20 +1,20 @@
 #!/bin/sh
 
-git clone --bare https://github.com/munjal/dotfiles.git $HOME/.cfg
+git clone -b munjals-fix --bare https://github.com/leoheck/dotfiles.git $HOME/.cfg
 
-config()
+git_mod()
 {
     /usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME $@
 }
 
 mkdir -p .config-backup
 
-if config checkout; then
+if git_mod checkout; then
     echo "Checked out config.";
 else
     echo "Backing up pre-existing dot files.";
-    config checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} mv {} .config-backup/{}
+    git_mod checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} mv {} .git_mod-backup/{}
 fi;
 
-config checkout
-config config status.showUntrackedFiles no
+git_mod checkout
+git_mod config status.showUntrackedFiles no

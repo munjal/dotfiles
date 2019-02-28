@@ -30,7 +30,7 @@ enable_services()
 set_hostname
 enable_services
 
-git_mod config_git()
+git_mod()
 {
     /usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME $@
 }
@@ -46,12 +46,12 @@ if ! command -v brew >/dev/null; then
     curl -fsS \
         'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
 
-    git_mod checkout -- $HOME/.zshrc
+    git_mod checkout $HOME/.zshrc
 
     echo >> $HOME/.zshrc
     echo '# Recommended by brew doctor' >> $HOME/.zshrc
-    echo 'export PATH="/usr/local/bin:$PATH"' 1 >> $HOME/.zshrc
-    echo 'export PATH="/usr/local/sbin:$PATH"' 1 >> $HOME/.zshrc
+    echo 'export PATH="/usr/local/bin:$PATH"' >> $HOME/.zshrc
+    echo 'export PATH="/usr/local/sbin:$PATH"'>> $HOME/.zshrc
 
     export PATH="/usr/local/bin:$PATH"
     export PATH="/usr/local/sbin:$PATH"

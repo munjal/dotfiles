@@ -2,7 +2,7 @@ tap 'caskroom/cask'
 tap 'git-duet/tap'
 tap 'caskroom/fonts'
 
-#For asdf
+# For asdf
 brew 'autoenv'
 brew 'automake'
 brew 'autoconf'
@@ -45,4 +45,3 @@ mas 'Slack', id: 803453959
 mas '1password', id: 1333542190
 
 cask 'google-chrome'
-

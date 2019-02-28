@@ -14,6 +14,7 @@ set_hostname()
 {
     fancy_echo "Setting hostname"
     sudo scutil --set ComputerName $USER
+    sudo scutil --set LocalHostName $USER
     dscacheutil -flushcache
 }
 
@@ -144,6 +145,8 @@ if [ ! -d "/Applications/Docker.app" ]
 then
     curl -Lo ~/Downloads/Docker.dmg  https://download.docker.com/mac/stable/Docker.dmg
     open ~/Downloads/Docker.dmg
+    # sudo hdiutil attach ~/Downloads/Docker.dmg
+    # sudo hdiutil unmount /Volumes/Docker
 fi
 
 fancy_echo "Installing Google Chat"
@@ -151,4 +154,6 @@ if [ ! -d "/Applications/Chat.app" ]
 then
     curl -Lo ~/Downloads/InstallHangoutsChat.dmg https://dl.google.com/chat/latest/InstallHangoutsChat.dmg
     open ~/Downloads/InstallHangoutsChat.dmg
+    # sudo hdiutil attach ~/Downloads/InstallHangoutsChat.dmg
+    # sudo hdiutil unmount /Volumes/Install
 fi

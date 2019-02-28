@@ -13,7 +13,7 @@ fancy_echo()
 set_hostname()
 {
     fancy_echo "Setting hostname"
-    sudo scutil --set ComputerName $username
+    sudo scutil --set ComputerName $USER
     dscacheutil -flushcache
 }
 

@@ -1,25 +1,46 @@
 #!/bin/sh
 
-# TODO:
-# [ ] acept configs from the command line
-# [x] install xcode-tools from command line: https://railsapps.github.io/xcode-command-line-tools.html
-# [x] create_user automatically (with admin powers)
-# [x] enable ssh service
-# [x] set hostname (matching the user name, to make easy to find the computer)
+# Usage: ./install-mac.sh [-u username -f "Full Name"] [-g git_email]
 
-username="test"
-userfullname="Testing Test"
+export username=
+export userfullname=
 
 parse_command_line()
 {
-    echo "(TODO) Parsing command lines..."
-    username
-    userfullname
+    POSITIONAL=()
+    while [[ $# -gt 0 ]]
+    do
+        key="$1"
+
+        case $key in
+            -u|--user)
+                USERNAME="$2"
+                shift # past argument
+                shift # past value
+                ;;
+            -n|--name)
+                FULLNAME="$2"
+                shift # past argument
+                shift # past value
+                ;;
+            -g|--git-email)
+                LIBPATH="$2"
+                shift # past argument
+                shift # past value
+                ;;
+            *)
+                POSITIONAL+=("$1") # save it in an array for later
+                shift # past argument
+            ;;
+        esac
+    done
+    set -- "${POSITIONAL[@]}" # restore positional parameters
 }
 
 install_xcode_cli_tools()
 {
-    xcode-select --install; sleep 1; \
+    xcode-select --install
+    sleep 1
 #     osascript << EOD
 #       tell application "System Events"
 #         tell process "Install Command Line Developer Tools"
@@ -51,13 +72,19 @@ set_hostname()
     dscacheutil -flushcache
 }
 
-# =====================================================================
+change_user()
+{
+    sudo su $username
+    cd ~/
+}
 
-parse_command_line
+
+parse_command_line "$*" 
 install_xcode_cli_tools
 create_user
 enable_ssh
 set_hostname
+change_user
 
 # =====================================================================
 

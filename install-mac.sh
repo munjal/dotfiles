@@ -144,18 +144,25 @@ fancy_echo "Installing Docker"
 if [ ! -d "/Applications/Docker.app" ]
 then
     curl -Lo ~/Downloads/Docker.dmg  https://download.docker.com/mac/stable/Docker.dmg
-    #open ~/Downloads/Docker.dmg
-    sudo hdiutil attach ~/Downloads/Docker.dmg
+    sudo hdiutil attach  -mountpoint <path-to-desired-mountpoint> ~/Downloads/Docker.dmg
     sudo cp -R "/Volumes/Docker/Docker.app" /Applications
-    sudo hdiutil unmount /Volumes/Docker
+    sudo hdiutil unmount "/Volumes/Docker"
 fi
 
 fancy_echo "Installing Google Chat"
 if [ ! -d "/Applications/Chat.app" ]
 then
     curl -Lo ~/Downloads/InstallHangoutsChat.dmg https://dl.google.com/chat/latest/InstallHangoutsChat.dmg
-    # open ~/Downloads/InstallHangoutsChat.dmg
     sudo hdiutil attach ~/Downloads/InstallHangoutsChat.dmg
     sudo cp -R "/Volumes/Install Hangouts Chat/Chat.app" /Applications
     sudo hdiutil unmount "/Volumes/Install Hangouts Chat"
+fi
+
+fancy_echo "Installing GPG Suite"
+if [ ! -d "/Applications/GPG Keychain.app" ]
+then
+    curl -Lo ~/Downloads/GPG_Suite-2018.5.dmg https://releases.gpgtools.org/GPG_Suite-2018.5.dmg
+    sudo hdiutil attach ~/Downloads/GPG_Suite-2018.5.dmg
+    sudo cp -R "/Volumes/GPG Suite/Install.app" /Applications
+    sudo hdiutil unmount "/Volumes/GPG Suite"
 fi

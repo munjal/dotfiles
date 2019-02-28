@@ -86,11 +86,8 @@ enable_ssh
 set_hostname
 change_user
 
-# =====================================================================
-
 fancy_echo() {
-    local fmt="$1"; shift
-    printf "\n$fmt\n" "$@"
+    printf "\n\n>>> %s\n" "$@"
 }
 
 function config {

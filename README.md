@@ -1,4 +1,4 @@
-## Logged with the new user
+Logged with the new user
 
 ```bash
 curl -Lks https://bit.ly/2tFrHnb | /bin/bash

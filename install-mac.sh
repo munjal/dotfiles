@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# Usage: ./install-mac.sh github_username github_gmail
+
+github_name="$1"
+github_email="$2"
+
 fancy_echo()
 {
     printf "\n\n>> %s\n" "$@"
@@ -35,11 +40,6 @@ fi
 if [ ! -f "$HOME/.ssh/id_rsa" ]
 then
     fancy_echo "Installing git keys"
-    fancy_echo "What name would you want in your Git commit messages?"
-    read github_name
-    fancy_echo "What's your email address associated with Github?"
-    read github_email
-
     fancy_echo "Writing to $HOME/.gitconfig"
     echo "
     [user]

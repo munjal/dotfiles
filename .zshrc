@@ -51,16 +51,12 @@ if [ -f '/Users/munjal/sdks/google-cloud-sdk/completion.zsh.inc' ]; then
 	source '/Users/munjal/sdks/google-cloud-sdk/completion.zsh.inc';
 fi
 
-# Pair with hostname
+# Pair with hostname or ip
 pair()
 {
-	hostname=$1
-	open vnc://$hostname.local
-}
-
-# Pair with user ip
-pair_ip()
-{
-	ip=$1
-	open vnc://$ip
+	ip_or_hostname=$1
+	if grep "^[a-zA-Z]" <<(echo $ip_or_hostname); then
+		ip_or_hostname=${ip_or_hostname}.lan
+	fi
+	open vnc://$ip_or_hostname
 }

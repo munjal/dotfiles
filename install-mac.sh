@@ -144,16 +144,18 @@ fancy_echo "Installing Docker"
 if [ ! -d "/Applications/Docker.app" ]
 then
     curl -Lo ~/Downloads/Docker.dmg  https://download.docker.com/mac/stable/Docker.dmg
-    open ~/Downloads/Docker.dmg
-    # sudo hdiutil attach ~/Downloads/Docker.dmg
-    # sudo hdiutil unmount /Volumes/Docker
+    #open ~/Downloads/Docker.dmg
+    sudo hdiutil attach ~/Downloads/Docker.dmg
+    sudo cp -R "/Volumes/Docker/Docker.app" /Applications
+    sudo hdiutil unmount /Volumes/Docker
 fi
 
 fancy_echo "Installing Google Chat"
 if [ ! -d "/Applications/Chat.app" ]
 then
     curl -Lo ~/Downloads/InstallHangoutsChat.dmg https://dl.google.com/chat/latest/InstallHangoutsChat.dmg
-    open ~/Downloads/InstallHangoutsChat.dmg
-    # sudo hdiutil attach ~/Downloads/InstallHangoutsChat.dmg
-    # sudo hdiutil unmount /Volumes/Install
+    # open ~/Downloads/InstallHangoutsChat.dmg
+    sudo hdiutil attach ~/Downloads/InstallHangoutsChat.dmg
+    sudo cp -R "/Volumes/Install Hangouts Chat/Chat.app" /Applications
+    sudo hdiutil unmount "/Volumes/Install Hangouts Chat"
 fi

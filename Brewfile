@@ -15,8 +15,6 @@ brew 'libtool'
 brew 'unixodbc'
 brew 'readline'
 
-cask 'gpg-suite'
-
 brew 'git'
 brew 'hub'
 brew 'git-duet'

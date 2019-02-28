@@ -10,6 +10,26 @@ fancy_echo()
     printf "\n\n>> %s\n" "$@"
 }
 
+set_hostname()
+{
+    fancy_echo "Setting hostname"
+    sudo scutil --set ComputerName $username
+    dscacheutil -flushcache
+}
+
+enable_services()
+{
+    fancy_echo "Enabling SSH service"
+    sudo  systemsetup -f -setremotelogin on
+
+    fancy_echo "Enabling Screen sharing"
+    sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart \
+        -activate -configure -access -off -restart -agent -privs -all -allowAccessFor -allUsers
+}
+
+set_hostname
+enable_services
+
 git_mod config_git()
 {
     /usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME $@

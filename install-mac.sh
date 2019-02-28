@@ -78,19 +78,12 @@ change_user()
     cd ~/
 }
 
-
-parse_command_line "$*" 
-install_xcode_cli_tools
-create_user
-enable_ssh
-set_hostname
-change_user
-
 fancy_echo() {
     printf "\n\n>>> %s\n" "$@"
 }
 
-function config {
+fancy_git()
+{
     /usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME $@
 }
 
@@ -106,7 +99,7 @@ if ! command -v brew >/dev/null; then
         'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
 
     change this... not working
-    config checkout $HOME/.zshrc
+    fancy_git checkout $HOME/.zshrc
 
     append_to_zshrc '# recommended by brew doctor'
 
@@ -213,3 +206,12 @@ then
     curl -o ~/Downloads/InstallHangoutsChat.dmg https://dl.google.com/chat/latest/InstallHangoutsChat.dmg
     open Downloads/InstallHangoutsChat.dmg
 fi
+
+
+
+parse_command_line "$@"
+install_xcode_cli_tools
+create_user
+enable_ssh
+set_hostname
+change_user

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-git clone -b munjals-fix --bare https://github.com/leoheck/dotfiles.git $HOME/.cfg
+git clone --bare https://github.com/munjal/dotfiles.git $HOME/.cfg
 
 git_mod()
 {

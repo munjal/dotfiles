@@ -1,6 +1,6 @@
 Logged with the new user
 
 ```bash
-curl -Lks https://bit.ly/2tFrHnb | /bin/bash
-./install-mac.sh "Leandro Heck" "leoheck@gmail.com"
+curl -Lks https://bit.ly/deepx_df | /bin/bash
+./install-mac.sh "User Name" "user@userland.com"
 ```

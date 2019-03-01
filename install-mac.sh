@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Usage: ./install-mac.sh github_username github_gmail
+# Usage: ./install-mac.sh github_name github_gmail
 
 github_name="$1"
 github_email="$2"
@@ -36,7 +36,7 @@ git_mod()
     /usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME $@
 }
 
-fancy_echo "Installing ohh-my-zsh"
+fancy_echo "Installing oh-my-zsh"
 if [ ! -d "$HOME/.oh-my-zsh" ]
 then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
@@ -84,6 +84,15 @@ then
     fancy_echo "Please copy your ssh public keys to github"
     open https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account
 
+    echo "
+    [user]
+	authors:
+	  $username: $c
+
+	email_addresses:
+	  $username: $github_email
+
+     " >> $HOME/.gitconfig
     echo > ~/.git-authors
 fi
 

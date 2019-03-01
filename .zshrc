@@ -55,7 +55,7 @@ fi
 pair()
 {
 	ip_or_hostname=$1
-	if grep "^[a-zA-Z]" <<(echo $ip_or_hostname); then
+	if grep "^[a-zA-Z]" <<(echo $ip_or_hostname) > /dev/null; then
 		ip_or_hostname=${ip_or_hostname}.lan
 	fi
 	open vnc://$ip_or_hostname

@@ -29,20 +29,18 @@ brew 'httpie'
 cask 'iterm2'
 cask 'atom'
 
-brew 'yarn'
-
-brew 'python3'
+brew 'rustup'
+brew 'ispell'
 
 brew 'kubernetes-cli'
 
 brew 'the_silver_searcher'
 brew 'diff-so-fancy'
 
-# These need the icloud?
+cask 'google-chrome'
 
 mas 'Numbers', id: 409203825
 mas 'Pages', id: 409201541
 mas 'Slack', id: 803453959
 mas '1password', id: 1333542190
 
-cask 'google-chrome'

@@ -31,12 +31,39 @@ enable_services()
 set_hostname
 enable_services
 
-git_mod()
+config()
 {
     /usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME $@
 }
 
-fancy_echo "Installing oh-my-zsh"
+fancy_echo "Would you like to configure Mac Defaults: Y/n?"
+read mac_defaults
+if [ mac_defaults == 'Y' || mac_defaults == 'y']
+then
+    # Setting Tap to click
+    defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
+    sudo defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+    sudo defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+    sudo defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
+    #Display only active applications in Dock
+    defaults write com.apple.dock static-only -bool TRUE
+
+    #Enable the Recent Items Menu
+    defaults write com.apple.dock persistent-others -array-add '{"tile-data" = {"list-type" = 1;}; "tile-type" = "recents-tile";}'
+
+    #Autohide dock
+    defaults write com.apple.dock showhidden -bool TRUE
+
+    #Add Dock on the left
+    defaults write com.apple.dock pinning -string start
+
+    killall Dock
+
+fi
+
+
+fancy_echo "Installing ohh-my-zsh"
 if [ ! -d "$HOME/.oh-my-zsh" ]
 then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
@@ -47,7 +74,7 @@ if ! command -v brew >/dev/null; then
     curl -fsS \
         'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
 
-    git_mod checkout $HOME/.zshrc
+    config checkout $HOME/.zshrc
 
     echo >> $HOME/.zshrc
     echo '# Recommended by brew doctor' >> $HOME/.zshrc
@@ -105,6 +132,17 @@ then
     git clone https://github.com/syl20bnr/spacemacs $HOME/.emacs.d
 fi
 
+fancy_echo "Installing Rust"
+rustup-init -y # Installs the default toolchain
+echo "export PATH=$PATH:$HOME/.cargo/bin" >> ~/.zshrc
+source $HOME/.cargo/env
+rustup toolchain add nightly
+cargo +nightly install racer
+rustup component add rust-src
+rustup update
+echo "export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/src" >> ~/.zshrc
+
+
 fancy_echo "Installing asdf"
 if [ ! -d "$HOME/.asdf" ]
 then
@@ -127,7 +165,6 @@ asdf_plugin_present() {
 fancy_echo "Adding asdf plugins"
 asdf_plugin_present elixir || asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git
 asdf_plugin_present erlang || asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git
-asdf_plugin_present nodejs || asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
 
 install_asdf_plugin()
 {
@@ -153,7 +190,7 @@ fancy_echo "Installing Docker"
 if [ ! -d "/Applications/Docker.app" ]
 then
     curl -Lo ~/Downloads/Docker.dmg  https://download.docker.com/mac/stable/Docker.dmg
-    sudo hdiutil attach  -mountpoint <path-to-desired-mountpoint> ~/Downloads/Docker.dmg
+    sudo hdiutil attach ~/Downloads/Docker.dmg
     sudo cp -R "/Volumes/Docker/Docker.app" /Applications
     sudo hdiutil unmount "/Volumes/Docker"
 fi
@@ -174,4 +211,13 @@ then
     sudo hdiutil attach ~/Downloads/GPG_Suite-2018.5.dmg
     sudo cp -R "/Volumes/GPG Suite/Install.app" /Applications
     sudo hdiutil unmount "/Volumes/GPG Suite"
+fi
+
+fancy_echo "Installing Google Drive"
+if [ ! -d "/Applications/Google Drive File Stream.app" ]
+then
+    curl -Lo ~/Downloads/GoogleDriveFileStream.dmg https://dl.google.com/drive-file-stream/GoogleDriveFileStream.dmg
+    hdiutil mount ~/Downloads/GoogleDriveFileStream.dmg
+    sudo installer -pkg /Volumes/Install\ Google\ Drive\ File\ Stream/GoogleDriveFileStream.pkg -target "/Volumes/Macintosh HD"
+    hdiutil unmount /Volumes/Install\ Google\ Drive\ File\ Stream/
 fi

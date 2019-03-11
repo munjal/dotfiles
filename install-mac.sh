@@ -56,7 +56,7 @@ then
     defaults write com.apple.dock showhidden -bool TRUE
 
     #Add Dock on the left
-    defaults write com.apple.dock pinning -string start
+    defaults write com.apple.dock pinning -string left
 
     killall Dock
 

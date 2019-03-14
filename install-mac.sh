@@ -38,14 +38,14 @@ config()
 
 fancy_echo "Would you like to configure Mac Defaults: Y/n?"
 read mac_defaults
-if [ mac_defaults == 'Y' || mac_defaults == 'y']
+if [[ $mac_defaults = "Y" ]]
 then
-    # Setting Tap to click
-    defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
-    sudo defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
-    sudo defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
-    sudo defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
-
+    #Dock size and layout
+    defaults write com.apple.dock tilesize -int 36
+    defaults write com.apple.dock magnification -bool true
+    defaults write com.apple.dock largesize -int 54
+    defaults write com.apple.dock mineffect -string "scale"
+    defaults write com.apple.dock minimize-to-application -bool true
     #Display only active applications in Dock
     defaults write com.apple.dock static-only -bool TRUE
 
@@ -53,10 +53,19 @@ then
     defaults write com.apple.dock persistent-others -array-add '{"tile-data" = {"list-type" = 1;}; "tile-type" = "recents-tile";}'
 
     #Autohide dock
-    defaults write com.apple.dock showhidden -bool TRUE
+    defaults write com.apple.dock autohide -bool true
 
     #Add Dock on the left
+    defaults write com.apple.dock orientation -string "left"
     defaults write com.apple.dock pinning -string left
+
+    # Show indicator lights for open applications
+    defaults write com.apple.dock show-process-indicators -bool true
+
+
+    # Bottom left screen corner → Start screen saver
+    defaults write com.apple.dock wvous-bl-corner -int 5
+    defaults write com.apple.dock wvous-bl-modifier -int 0
 
     killall Dock
 

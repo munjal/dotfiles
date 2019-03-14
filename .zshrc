@@ -16,7 +16,6 @@ plugins=(
 	elixir
 	mix-fast
 	osx
-	rails
 	rake
 	ruby
 	terminalapp
@@ -57,4 +56,3 @@ pair()
 	fi
 	open vnc://$ip_or_hostname
 }
-

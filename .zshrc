@@ -13,7 +13,6 @@ plugins=(
 	git-extras
 	git-flow
 	github
-	elixir
 	mix-fast
 	osx
 	rake
@@ -21,9 +20,8 @@ plugins=(
 	terminalapp
 	textmate
 	tmuxinator
-	urltool
 	zeus
-	zsh-syntax-highlighting)
+)
 
 DEFAULT_USER="$USER"
 

@@ -191,7 +191,7 @@ install_asdf_plugin elixir
 fancy_echo "Installing Visual Studio Code"
 if [ ! -d "/Applications/Visual Studio Code.app" ]
 then
-    curl -Lo /Applications/Visual\ Studio\ Code.zip https://update.code.visualstudio.com/1.31.1/darwin/stable
+    curl -Lo /Applications/Visual\ Studio\ Code.zip https://update.code.visualstudio.com/1.31.2/darwin/stable
     tar -xf /Applications/Visual\ Studio\ Code.zip
 fi
 
@@ -218,7 +218,7 @@ if [ ! -d "/Applications/GPG Keychain.app" ]
 then
     curl -Lo ~/Downloads/GPG_Suite-2018.5.dmg https://releases.gpgtools.org/GPG_Suite-2018.5.dmg
     sudo hdiutil attach ~/Downloads/GPG_Suite-2018.5.dmg
-    sudo cp -R "/Volumes/GPG Suite/Install.app" /Applications
+    open "/Volumes/GPG Suite/Install.pkg"
     sudo hdiutil unmount "/Volumes/GPG Suite"
 fi
 

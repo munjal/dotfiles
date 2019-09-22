@@ -28,11 +28,6 @@ DEFAULT_USER="$USER"
 source $ZSH/oh-my-zsh.sh
 source ~/.alias
 
-autoload bashcompinit && bashcompinit
-
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
-
 source <(kubectl completion zsh)
 
 # The next line updates PATH for the Google Cloud SDK.
@@ -54,3 +49,21 @@ pair()
 	fi
 	open vnc://$ip_or_hostname
 }
+
+# Recommended by brew doctor
+export PATH="/usr/local/bin:$PATH"
+export PATH="/usr/local/sbin:$PATH"
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/munjal/.cargo/bin
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/munjal/.cargo/bin
+export RUST_SRC_PATH=/Users/munjal/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/munjal/.cargo/bin:/Users/munjal/.cargo/bin
+export RUST_SRC_PATH=/Users/munjal/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src
+
+autoload -Uz compinit && compinit
+
+source /Users/munjal/.asdf/asdf.sh
+source /Users/munjal/.asdf/completions/asdf.bash
+
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+

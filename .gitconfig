@@ -71,3 +71,7 @@
 [fetch]
 	prune = true
 
+[user]
+    name = Munjal Budhabhatti
+    email = munjalpb2000@gmail.com
+		signingkey = C75C745A97C9C9E3

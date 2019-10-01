@@ -120,16 +120,6 @@ then
     fancy_echo "Please copy your ssh public keys to github"
     open https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account
 
-    echo "
-    [user]
-	authors:
-	  $username: $c
-
-	email_addresses:
-	  $username: $github_email
-
-     " >> $HOME/.gitconfig
-    echo > ~/.git-authors
 fi
 
 fancy_echo "Installing brew bundles..."
@@ -140,17 +130,6 @@ if [ ! -d "$HOME/.emacs.d" ]
 then
     git clone https://github.com/syl20bnr/spacemacs $HOME/.emacs.d
 fi
-
-fancy_echo "Installing Rust"
-rustup-init -y # Installs the default toolchain
-echo "export PATH=$PATH:$HOME/.cargo/bin" >> ~/.zshrc
-source $HOME/.cargo/env
-rustup toolchain add nightly
-cargo +nightly install racer
-rustup component add rust-src
-rustup update
-echo "export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/src" >> ~/.zshrc
-
 
 fancy_echo "Installing asdf"
 if [ ! -d "$HOME/.asdf" ]
@@ -191,7 +170,7 @@ install_asdf_plugin elixir
 fancy_echo "Installing Visual Studio Code"
 if [ ! -d "/Applications/Visual Studio Code.app" ]
 then
-    curl -Lo /Applications/Visual\ Studio\ Code.zip https://update.code.visualstudio.com/1.31.2/darwin/stable
+    curl -Lo /Applications/Visual\ Studio\ Code.zip https://go.microsoft.com/fwlink/?LinkID=620882
     tar -xf /Applications/Visual\ Studio\ Code.zip
 fi
 

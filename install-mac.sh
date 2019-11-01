@@ -96,14 +96,6 @@ fi
 
 if [ ! -f "$HOME/.ssh/id_rsa" ]
 then
-    fancy_echo "Installing git keys"
-    fancy_echo "Writing to $HOME/.gitconfig"
-    echo "
-    [user]
-        name = $github_name
-        email = $github_email
-     " >> $HOME/.gitconfig
-
     fancy_echo "Generating & configuringssh keys"
     ssh-keygen -t rsa -b 4096 -C $github_email -N "" -f $HOME/.ssh/id_rsa
     eval "$(ssh-agent -s)"
@@ -143,7 +135,7 @@ fi
 . $HOME/.asdf/completions/asdf.bash
 
 find_latest_asdf() {
-    asdf list-all "$1" | grep -v - | tail -1 | sed -e 's/^ *//'
+    asdf list-all "$1" | grep -v - | sed -e 's/\([0-9|\.]*\).*/\1/' | sed -e '/^$/ d' |tail -1
 }
 asdf_plugin_present() {
     $(asdf plugin-list | grep "$1" > /dev/null)

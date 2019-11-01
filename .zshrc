@@ -17,7 +17,6 @@ plugins=(
 	osx
 	rake
 	ruby
-	terminalapp
 	textmate
 	tmuxinator
 	zeus
@@ -61,8 +60,8 @@ export RUST_SRC_PATH=/Users/munjal/.rustup/toolchains/stable-x86_64-apple-darwin
 
 autoload -Uz compinit && compinit
 
-source /Users/munjal/.asdf/asdf.sh
-source /Users/munjal/.asdf/completions/asdf.bash
+source ~/.asdf/asdf.sh
+source ~/.asdf/completions/asdf.bash
 
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

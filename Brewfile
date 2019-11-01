@@ -1,7 +1,7 @@
 
-tap 'caskroom/cask'
+tap 'homebrew/cask'
 tap 'git-duet/tap'
-tap 'caskroom/fonts'
+tap 'homebrew/cask-fonts'
 
 # For asdf
 brew 'autoenv'

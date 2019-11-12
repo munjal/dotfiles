@@ -66,3 +66,4 @@ source ~/.asdf/completions/asdf.bash
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+fpath+=${ZDOTDIR:-~}/.zsh_functions

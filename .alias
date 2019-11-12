@@ -17,3 +17,5 @@ alias fz='find * -type f | fzf'
 alias emd='/Applications/Emacs.app/Contents/MacOS/Emacs --daemon'
 alias em='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait'
 alias emn='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -c --no-wait'
+
+alias gcproxy='./cloud_sql_proxy -dir=/tmp/cloudsql -instances=${DATABASE_INSTANCE}'

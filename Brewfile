@@ -27,7 +27,7 @@ brew 'tmux'
 brew 'macvim'
 brew 'httpie'
 cask 'iterm2'
-cask 'atom'
+cask 'alacritty'
 
 brew 'rustup'
 brew 'ispell'

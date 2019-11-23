@@ -29,8 +29,7 @@ brew 'httpie'
 cask 'iterm2'
 cask 'alacritty'
 
-brew 'rustup'
-brew 'ispell'
+brew 'peco'
 
 brew 'kubernetes-cli'
 cask 'google-cloud-sdk'

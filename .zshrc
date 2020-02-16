@@ -20,6 +20,8 @@ plugins=(
 	textmate
 	tmuxinator
 	zeus
+	zsh-autosuggestions 
+	zsh-syntax-highlighting
 )
 
 DEFAULT_USER="$USER"
@@ -39,31 +41,18 @@ if [ -f '/Users/munjal/sdks/google-cloud-sdk/completion.zsh.inc' ]; then
 	source '/Users/munjal/sdks/google-cloud-sdk/completion.zsh.inc';
 fi
 
-# Pair with hostname or ip
-pair()
-{
-	ip_or_hostname=$1
-	if grep "^[a-zA-Z]" <<(echo $ip_or_hostname) > /dev/null; then
-		ip_or_hostname=${ip_or_hostname}.lan
-	fi
-	open vnc://$ip_or_hostname
-}
-
-# Recommended by brew doctor
-export PATH="/usr/local/bin:$PATH"
-export PATH="/usr/local/sbin:$PATH"
-export PATH=/usr/local/sbin:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/munjal/.cargo/bin
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/munjal/.cargo/bin
-export RUST_SRC_PATH=/Users/munjal/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/munjal/.cargo/bin:/Users/munjal/.cargo/bin
-export RUST_SRC_PATH=/Users/munjal/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src
-
-autoload -Uz compinit && compinit
-
 source ~/.asdf/asdf.sh
 source ~/.asdf/completions/asdf.bash
 
+export PATH="$PATH:/usr/local/bin"
+export PATH="$PATH:/usr/local/sbin"
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+autoload -Uz compinit && compinit
 
-fpath+=${ZDOTDIR:-~}/.zsh_functions
+function pair() {
+  ip_or_hostname=$1
+  if grep "^[a-zA-Z]" < <(echo "$ip_or_hostname"); then
+    ip_or_hostname=${ip_or_hostname}.lan
+  fi
+  open vnc://"$ip_or_hostname"
+}

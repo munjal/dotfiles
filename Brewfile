@@ -29,6 +29,8 @@ brew 'httpie'
 cask 'iterm2'
 cask 'alacritty'
 
+brew 'bat'
+
 brew 'peco'
 
 brew 'kubernetes-cli'
@@ -40,6 +42,7 @@ brew 'diff-so-fancy'
 brew 'yarn'
 
 cask 'google-chrome'
+cask 'brave-browser'
 
 mas 'Numbers', id: 409203825
 mas 'Pages', id: 409201541

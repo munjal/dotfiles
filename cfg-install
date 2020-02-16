@@ -1,6 +1,6 @@
 #!/bin/sh
 
-git clone --bare https://github.com/munjal/dotfiles.git $HOME/.cfg
+git clone --bare git@github.com:munjal/dotfiles.git ~$HOME/.cfg
 
 git_mod()
 {

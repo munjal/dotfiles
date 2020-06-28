@@ -2,6 +2,7 @@
 tap 'homebrew/cask'
 tap 'git-duet/tap'
 tap 'homebrew/cask-fonts'
+tap 'swiftformat-for-xcode'
 
 # For asdf
 brew 'autoenv'
@@ -14,6 +15,7 @@ brew 'libxslt'
 brew 'libtool'
 brew 'unixodbc'
 brew 'readline'
+brew 'httpie'
 
 brew 'git'
 brew 'hub'

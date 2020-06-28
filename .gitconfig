@@ -45,7 +45,7 @@
 
 [core]
 	pager = diff-so-fancy | less --tabs=4 -RFX
-	editor = "emacsclient -c"
+	editor = code --wait
 
 [grep]
 	lineNumber = true
@@ -75,3 +75,5 @@
     name = Munjal Budhabhatti
     email = munjalpb2000@gmail.com
     signingkey = C75C745A97C9C9E3
+[diff]
+	tool = opendiff

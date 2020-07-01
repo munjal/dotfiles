@@ -56,3 +56,7 @@ function pair() {
   fi
   open vnc://"$ip_or_hostname"
 }
+
+# Recommended by brew doctor
+export PATH="/usr/local/bin:$PATH"
+export PATH="/usr/local/sbin:$PATH"

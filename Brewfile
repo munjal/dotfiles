@@ -2,7 +2,6 @@
 tap 'homebrew/cask'
 tap 'git-duet/tap'
 tap 'homebrew/cask-fonts'
-tap 'swiftformat-for-xcode'
 
 # For asdf
 brew 'autoenv'
@@ -20,6 +19,8 @@ brew 'httpie'
 brew 'git'
 brew 'hub'
 brew 'git-duet'
+brew 'gnupg' 
+brew 'pinentry-mac'
 
 cask 'font-fira-code'
 cask 'font-inconsolata'
@@ -28,8 +29,6 @@ cask 'emacs'
 brew 'tmux'
 brew 'macvim'
 brew 'httpie'
-cask 'iterm2'
-cask 'alacritty'
 
 brew 'bat'
 

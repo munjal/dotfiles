@@ -80,8 +80,7 @@ fi
 
 fancy_echo "Installing Homebrew ..."
 if ! command -v brew >/dev/null; then
-    curl -fsS \
-        'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
     config checkout $HOME/.zshrc
 
@@ -116,6 +115,20 @@ fi
 
 fancy_echo "Installing brew bundles..."
 brew bundle
+
+if [ ! -f "$HOME/.gnupg/gpg-agent.conf" ]
+then
+    fancy_echo "Creating gpg-agent conf file"
+
+    touch $HOME/.gnupg/gpg-agent.conf
+    echo "pinentry-program /usr/local/bin/pinentry-mac" >> $HOME/.gnupg/gpg-agent.conf
+
+    fancy_echo "Import private key from 1password and save it as `private.asc` in $HOME/.gnupg/"
+    fancy_echo "Import private keys using `gpg --import private.asc`"
+    fancy_echo "Kill gpg-agent using `killall gpg-agent` and then test `echo "test" | gpg --clearsign`"
+fi
+
+
 
 fancy_echo "Installing spacemacs"
 if [ ! -d "$HOME/.emacs.d" ]

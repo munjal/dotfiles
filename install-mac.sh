@@ -200,15 +200,6 @@ then
     sudo hdiutil unmount "/Volumes/Install Hangouts Chat"
 fi
 
-fancy_echo "Installing GPG Suite"
-if [ ! -d "/Applications/GPG Keychain.app" ]
-then
-    curl -Lo ~/Downloads/GPG_Suite-2018.5.dmg https://releases.gpgtools.org/GPG_Suite-2018.5.dmg
-    sudo hdiutil attach ~/Downloads/GPG_Suite-2018.5.dmg
-    open "/Volumes/GPG Suite/Install.pkg"
-    sudo hdiutil unmount "/Volumes/GPG Suite"
-fi
-
 fancy_echo "Installing Google Drive"
 if [ ! -d "/Applications/Google Drive File Stream.app" ]
 then

@@ -45,6 +45,8 @@ brew 'yarn'
 cask 'google-chrome'
 cask 'brave-browser'
 
+cask 'vlc'
+
 mas 'Numbers', id: 409203825
 mas 'Pages', id: 409201541
 mas 'Slack', id: 803453959

@@ -80,17 +80,10 @@ fi
 
 fancy_echo "Installing Homebrew ..."
 if ! command -v brew >/dev/null; then
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    
     config checkout $HOME/.zshrc
-
-    echo >> $HOME/.zshrc
-    echo '# Recommended by brew doctor' >> $HOME/.zshrc
-    echo 'export PATH="/usr/local/bin:$PATH"' >> $HOME/.zshrc
-    echo 'export PATH="/usr/local/sbin:$PATH"'>> $HOME/.zshrc
-
-    export PATH="/usr/local/bin:$PATH"
-    export PATH="/usr/local/sbin:$PATH"
+    config checkout $HOME/.zprofile
 fi
 
 if [ ! -f "$HOME/.ssh/id_rsa" ]
@@ -121,14 +114,14 @@ then
     fancy_echo "Creating gpg-agent conf file"
 
     touch $HOME/.gnupg/gpg-agent.conf
-    echo "pinentry-program /usr/local/bin/pinentry-mac" >> $HOME/.gnupg/gpg-agent.conf
-
+    pinentry_path=$(brew --prefix)
+    echo "pinentry-program $pinentry_path/bin/pinentry-mac" >> $HOME/.gnupg/gpg-agent.conf
+    
+    fancy_echo "Kill gpg-agent using `killall gpg-agent`
     fancy_echo "Import private key from 1password and save it as `private.asc` in $HOME/.gnupg/"
     fancy_echo "Import private keys using `gpg --import private.asc`"
-    fancy_echo "Kill gpg-agent using `killall gpg-agent` and then test `echo "test" | gpg --clearsign`"
+    fancy_echo "test `echo "test" | gpg --clearsign`"
 fi
-
-
 
 fancy_echo "Installing spacemacs"
 if [ ! -d "$HOME/.emacs.d" ]
@@ -159,8 +152,10 @@ asdf_plugin_present() {
 }
 
 fancy_echo "Adding asdf plugins"
+asdf_plugin_present ruby || asdf plugin-add https://github.com/asdf-vm/asdf-ruby.git
 asdf_plugin_present elixir || asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git
 asdf_plugin_present erlang || asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git
+
 
 install_asdf_plugin()
 {
@@ -174,12 +169,14 @@ fancy_echo "Installing asdf plugins"
 export KERL_CONFIGURE_OPTIONS="--disable-debug --without-javac"
 install_asdf_plugin erlang
 install_asdf_plugin elixir
+install_asdf_plugin ruby
+
 
 fancy_echo "Installing Visual Studio Code"
 if [ ! -d "/Applications/Visual Studio Code.app" ]
 then
-    curl -Lo /Applications/Visual\ Studio\ Code.zip https://go.microsoft.com/fwlink/?LinkID=620882
-    tar -xf /Applications/Visual\ Studio\ Code.zip
+    curl -Lo /Applications/VCode.zip https://code.visualstudio.com/sha/download?build=stable&os=darwin-universal
+    unzip -fo /Applications/VCode.zip
 fi
 
 fancy_echo "Installing Docker"

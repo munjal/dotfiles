@@ -1,7 +1,16 @@
+ZSH_DISABLE_COMPFIX=true
 ZSH=$HOME/.oh-my-zsh
 
 ZSH_THEME="robbyrussell"
 # ZSH_THEME="agnoster"
+
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+
+  autoload -Uz compinit
+  compinit
+fi
+
 
 plugins=(
 	asdf
@@ -44,11 +53,6 @@ fi
 source ~/.asdf/asdf.sh
 source ~/.asdf/completions/asdf.bash
 
-export PATH="$PATH:/usr/local/bin"
-export PATH="$PATH:/usr/local/sbin"
-
-autoload -Uz compinit && compinit
-
 function pair() {
   ip_or_hostname=$1
   if grep "^[a-zA-Z]" < <(echo "$ip_or_hostname"); then
@@ -56,7 +60,3 @@ function pair() {
   fi
   open vnc://"$ip_or_hostname"
 }
-
-# Recommended by brew doctor
-export PATH="/usr/local/bin:$PATH"
-export PATH="/usr/local/sbin:$PATH"

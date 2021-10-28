@@ -36,6 +36,9 @@ config()
     /usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME $@
 }
 
+fancy_echo "Opening App Store to accept agreement"
+open https://apps.apple.com/us/app/xcode/id497799835?mt=12
+
 fancy_echo "Would you like to configure Mac Defaults: Y/n?"
 read mac_defaults
 if [[ $mac_defaults = "Y" ]]
@@ -83,7 +86,10 @@ if ! command -v brew >/dev/null; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     
     config checkout $HOME/.zshrc
-    config checkout $HOME/.zprofile
+    #config checkout $HOME/.zprofile >> No zprofile exists yet in git dotfiles
+
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 if [ ! -f "$HOME/.ssh/id_rsa" ]
@@ -117,7 +123,7 @@ then
     pinentry_path=$(brew --prefix)
     echo "pinentry-program $pinentry_path/bin/pinentry-mac" >> $HOME/.gnupg/gpg-agent.conf
     
-    fancy_echo "Kill gpg-agent using `killall gpg-agent`
+    fancy_echo "Kill gpg-agent using `killall gpg-agent`"
     fancy_echo "Import private key from 1password and save it as `private.asc` in $HOME/.gnupg/"
     fancy_echo "Import private keys using `gpg --import private.asc`"
     fancy_echo "test `echo "test" | gpg --clearsign`"
@@ -175,33 +181,24 @@ install_asdf_plugin ruby
 fancy_echo "Installing Visual Studio Code"
 if [ ! -d "/Applications/Visual Studio Code.app" ]
 then
-    curl -Lo /Applications/VCode.zip https://code.visualstudio.com/sha/download?build=stable&os=darwin-universal
+    curl -Lo /Applications/VCode.zip https://code.visualstudio.com/sha/download?build=stable&os=darwin-arm64
     unzip -fo /Applications/VCode.zip
 fi
 
 fancy_echo "Installing Docker"
 if [ ! -d "/Applications/Docker.app" ]
 then
-    curl -Lo ~/Downloads/Docker.dmg  https://download.docker.com/mac/stable/Docker.dmg
+    curl -Lo ~/Downloads/Docker.dmg https://desktop.docker.com/mac/main/arm64/Docker.dmg
     sudo hdiutil attach ~/Downloads/Docker.dmg
     sudo cp -R "/Volumes/Docker/Docker.app" /Applications
     sudo hdiutil unmount "/Volumes/Docker"
 fi
 
-fancy_echo "Installing Google Chat"
-if [ ! -d "/Applications/Chat.app" ]
-then
-    curl -Lo ~/Downloads/InstallHangoutsChat.dmg https://dl.google.com/chat/latest/InstallHangoutsChat.dmg
-    sudo hdiutil attach ~/Downloads/InstallHangoutsChat.dmg
-    sudo cp -R "/Volumes/Install Hangouts Chat/Chat.app" /Applications
-    sudo hdiutil unmount "/Volumes/Install Hangouts Chat"
-fi
-
 fancy_echo "Installing Google Drive"
 if [ ! -d "/Applications/Google Drive File Stream.app" ]
 then
-    curl -Lo ~/Downloads/GoogleDriveFileStream.dmg https://dl.google.com/drive-file-stream/GoogleDriveFileStream.dmg
-    hdiutil mount ~/Downloads/GoogleDriveFileStream.dmg
-    sudo installer -pkg /Volumes/Install\ Google\ Drive\ File\ Stream/GoogleDriveFileStream.pkg -target "/Volumes/Macintosh HD"
-    hdiutil unmount /Volumes/Install\ Google\ Drive\ File\ Stream/
+    curl -Lo ~/Downloads/GoogleDrive.dmg https://dl.google.com/drive-file-stream/GoogleDrive.dmg
+    hdiutil mount ~/Downloads/GoogleDrive.dmg
+    sudo installer -pkg /Volumes/Install\ Google\ Drive/GoogleDrive.pkg -target "/Volumes/Macintosh HD"
+    hdiutil unmount /Volumes/Install\ Google\ Drive/
 fi

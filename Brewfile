@@ -25,13 +25,10 @@ brew 'pinentry-mac'
 cask 'font-fira-code'
 cask 'font-inconsolata'
 
-cask 'emacs'
-brew 'tmux'
-brew 'macvim'
+cask 'julia'
+
 brew 'httpie'
-
 brew 'bat'
-
 brew 'peco'
 
 brew 'kubernetes-cli'

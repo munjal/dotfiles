@@ -23,7 +23,7 @@ plugins=(
 	git-flow
 	github
 	mix-fast
-	osx
+	macos
 	rake
 	ruby
 	textmate

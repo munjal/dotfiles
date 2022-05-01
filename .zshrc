@@ -53,10 +53,4 @@ fi
 source ~/.asdf/asdf.sh
 source ~/.asdf/completions/asdf.bash
 
-function pair() {
-  ip_or_hostname=$1
-  if grep "^[a-zA-Z]" < <(echo "$ip_or_hostname"); then
-    ip_or_hostname=${ip_or_hostname}.lan
-  fi
-  open vnc://"$ip_or_hostname"
-}
+eval "$(starship init zsh)"

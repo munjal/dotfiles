@@ -56,6 +56,7 @@ cask 'font-victor-mono-nerd-font'
 brew 'starship'
 
 cask 'julia'
+cask 'warp'
 
 brew 'httpie'
 brew 'bat'
@@ -66,14 +67,13 @@ cask 'google-cloud-sdk'
 
 brew 'the_silver_searcher'
 brew 'diff-so-fancy'
-
 brew 'yarn'
 
-cask 'google-chrome'
 cask 'brave-browser'
 
 cask 'vlc'
 
+mas 'Keynote', id: 409183694
 mas 'Numbers', id: 409203825
 mas 'Pages', id: 409201541
 mas 'Slack', id: 803453959

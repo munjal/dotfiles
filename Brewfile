@@ -19,7 +19,7 @@ brew 'httpie'
 brew 'git'
 brew 'hub'
 brew 'git-duet'
-brew 'gnupg' 
+brew 'gnupg'
 brew 'pinentry-mac'
 
 cask 'font-fira-code'
@@ -55,7 +55,6 @@ cask 'font-victor-mono-nerd-font'
 
 brew 'starship'
 
-cask 'julia'
 cask 'warp'
 
 brew 'httpie'

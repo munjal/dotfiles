@@ -92,28 +92,11 @@ if ! command -v brew >/dev/null; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-if [ ! -f "$HOME/.ssh/id_rsa" ]
-then
-    fancy_echo "Generating & configuringssh keys"
-    ssh-keygen -t rsa -b 4096 -C $github_email -N "" -f $HOME/.ssh/id_rsa
-    eval "$(ssh-agent -s)"
-
-    touch $HOME/.ssh/config
-    echo "
-    Host *
-        AddKeysToAgent yes
-        UseKeychain yes
-        IdentityFile $HOME/.ssh/id_rsa" >> $HOME/.ssh/config
-
-    ssh-add -K $HOME/.ssh/id_rsa
-
-    fancy_echo "Please copy your ssh public keys to github"
-    open https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account
-
-fi
-
 fancy_echo "Installing brew bundles..."
 brew bundle
+
+fancy_echo "Generating & configuringssh keys"
+gh auth login -s write:gpg_key,repo
 
 if [ ! -f "$HOME/.gnupg/gpg-agent.conf" ]
 then
@@ -151,12 +134,6 @@ asdf_plugin_present() {
     return $?
 }
 
-fancy_echo "Adding asdf plugins"
-asdf_plugin_present ruby || asdf plugin-add https://github.com/asdf-vm/asdf-ruby.git
-asdf_plugin_present elixir || asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git
-asdf_plugin_present erlang || asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git
-
-
 install_asdf_plugin()
 {
     plugin_version=$(find_latest_asdf $1)
@@ -164,6 +141,11 @@ install_asdf_plugin()
     asdf install $1 $plugin_version
     asdf global $1 $plugin_version
 }
+
+fancy_echo "Adding asdf plugins"
+asdf_plugin_present ruby || asdf plugin-add https://github.com/asdf-vm/asdf-ruby.git
+asdf_plugin_present elixir || asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git
+asdf_plugin_present erlang || asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git
 
 fancy_echo "Installing asdf plugins"
 export KERL_CONFIGURE_OPTIONS="--disable-debug --without-javac"

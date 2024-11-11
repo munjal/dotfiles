@@ -45,7 +45,7 @@
 
 [core]
 	pager = diff-so-fancy | less --tabs=4 -RFX
-	editor = code --wait
+	editor = zed --wait
 
 [grep]
 	lineNumber = true

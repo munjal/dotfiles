@@ -1,7 +1,4 @@
-
-tap 'homebrew/cask'
 tap 'git-duet/tap'
-tap 'homebrew/cask-fonts'
 
 # For asdf
 brew 'autoenv'
@@ -17,11 +14,12 @@ brew 'readline'
 brew 'httpie'
 
 brew 'git'
-brew 'hub'
-brew 'git-duet'
+brew 'gh'
 brew 'gnupg'
 brew 'pinentry-mac'
+brew 'diff-so-fancy'
 
+cask 'cursor'
 cask 'font-fira-code'
 cask 'font-inconsolata'
 
@@ -55,25 +53,17 @@ cask 'font-victor-mono-nerd-font'
 
 brew 'starship'
 
-cask 'warp'
-
 brew 'httpie'
 brew 'bat'
 brew 'peco'
 
+brew 'npm'
+
 brew 'kubernetes-cli'
 cask 'google-cloud-sdk'
-
-brew 'the_silver_searcher'
-brew 'diff-so-fancy'
-brew 'yarn'
-
 cask 'brave-browser'
-
-cask 'vlc'
 
 mas 'Keynote', id: 409183694
 mas 'Numbers', id: 409203825
 mas 'Pages', id: 409201541
 mas 'Slack', id: 803453959
-mas '1password', id: 1333542190

@@ -130,25 +130,26 @@ find_latest_asdf() {
     asdf list-all "$1" | grep -v - | sed -e 's/\([0-9|\.]*\).*/\1/' | sed -e '/^$/ d' |tail -1
 }
 asdf_plugin_present() {
-    $(asdf plugin-list | grep "$1" > /dev/null)
-    return $?
+    asdf plugin-list | grep -q "$1"
 }
 
-install_asdf_plugin()
-{
-    plugin_version=$(find_latest_asdf $1)
+install_asdf_plugin() {
+    plugin_version=$(find_latest_asdf "$1")
     fancy_echo "Installing $1 $plugin_version"
-    asdf install $1 $plugin_version
-    asdf global $1 $plugin_version
+    asdf install "$1" "$plugin_version"
+    asdf global "$1" "$plugin_version"
 }
 
 fancy_echo "Adding asdf plugins"
 asdf_plugin_present ruby || asdf plugin-add https://github.com/asdf-vm/asdf-ruby.git
-asdf_plugin_present elixir || asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git
 asdf_plugin_present erlang || asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git
+asdf_plugin_present elixir || asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git
+
+ulimit -n 4096
 
 fancy_echo "Installing asdf plugins"
-export KERL_CONFIGURE_OPTIONS="--disable-debug --without-javac"
+
+export KERL_CONFIGURE_OPTIONS="--without-javac --with-ssl=$(brew --prefix openssl@3)"
 install_asdf_plugin erlang
 install_asdf_plugin elixir
 install_asdf_plugin ruby

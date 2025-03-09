@@ -106,44 +106,36 @@ then
     pinentry_path=$(brew --prefix)
     echo "pinentry-program $pinentry_path/bin/pinentry-mac" >> $HOME/.gnupg/gpg-agent.conf
 
-    fancy_echo "Kill gpg-agent using `killall gpg-agent`"
-    fancy_echo "Import private key from 1password and save it as `private.asc` in $HOME/.gnupg/"
-    fancy_echo "Import private keys using `gpg --import private.asc`"
-    fancy_echo "test `echo "test" | gpg --clearsign`"
+    fancy_echo "Kill gpg-agent using: killall gpg-agent"
+    fancy_echo "Import private key from 1password and save it as private.asc in $HOME/.gnupg/"
+    fancy_echo "Import private keys using: gpg --import private.asc"
+    fancy_echo "test: echo "test" | gpg --clearsign"
 fi
 
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
 fancy_echo "Installing asdf"
-if [ ! -d "$HOME/.asdf" ]
-then
-    git clone https://github.com/asdf-vm/asdf.git $HOME/.asdf
-    cd $HOME/.asdf
-    git checkout "$(git describe --abbrev=0 --tags)"
-fi
-
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
+mkdir -p "${ASDF_DATA_DIR:-$HOME/.asdf}/completions"
+asdf completion zsh > "${ASDF_DATA_DIR:-$HOME/.asdf}/completions/_asdf"
 
 find_latest_asdf() {
-    asdf list-all "$1" | grep -v - | sed -e 's/\([0-9|\.]*\).*/\1/' | sed -e '/^$/ d' |tail -1
+    asdf list all "$1" | grep -v - | sed -e 's/\([0-9|\.]*\).*/\1/' | sed -e '/^$/ d' |tail -1
 }
 asdf_plugin_present() {
-    asdf plugin-list | grep -q "$1"
+    asdf plugin list | grep -q "$1"
 }
 
 install_asdf_plugin() {
     plugin_version=$(find_latest_asdf "$1")
     fancy_echo "Installing $1 $plugin_version"
     asdf install "$1" "$plugin_version"
-    asdf global "$1" "$plugin_version"
 }
 
 fancy_echo "Adding asdf plugins"
-asdf_plugin_present ruby || asdf plugin-add https://github.com/asdf-vm/asdf-ruby.git
-asdf_plugin_present erlang || asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git
-asdf_plugin_present elixir || asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git
+asdf_plugin_present ruby || asdf plugin add https://github.com/asdf-vm/asdf-ruby.git
+asdf_plugin_present erlang || asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git
+asdf_plugin_present elixir || asdf plugin add elixir https://github.com/asdf-vm/asdf-elixir.git
 
 ulimit -n 4096
 

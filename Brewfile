@@ -2,6 +2,7 @@ tap 'git-duet/tap'
 
 # For asdf
 brew 'autoenv'
+brew 'wxwidgets'
 brew 'automake'
 brew 'autoconf'
 brew 'coreutils'
@@ -18,6 +19,8 @@ brew 'gh'
 brew 'gnupg'
 brew 'pinentry-mac'
 brew 'diff-so-fancy'
+
+brew 'asdf'
 
 cask 'cursor'
 cask 'font-fira-code'

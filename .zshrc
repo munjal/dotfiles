@@ -11,7 +11,6 @@ if type brew &>/dev/null; then
   compinit
 fi
 
-
 plugins=(
 	asdf
 	brew
@@ -50,7 +49,8 @@ if [ -f '/Users/munjal/sdks/google-cloud-sdk/completion.zsh.inc' ]; then
 	source '/Users/munjal/sdks/google-cloud-sdk/completion.zsh.inc';
 fi
 
-source ~/.asdf/asdf.sh
-source ~/.asdf/completions/asdf.bash
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+fpath=(${ASDF_DATA_DIR:-$HOME/.asdf}/completions $fpath)
+autoload -Uz compinit && compinit
 
 eval "$(starship init zsh)"

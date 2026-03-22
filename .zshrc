@@ -12,7 +12,6 @@ if type brew &>/dev/null; then
 fi
 
 plugins=(
-	asdf
 	brew
 	bundler
 	docker
@@ -21,14 +20,9 @@ plugins=(
 	git-extras
 	git-flow
 	github
-	mix-fast
 	macos
-	rake
-	ruby
-	textmate
 	tmuxinator
-	zeus
-	zsh-autosuggestions 
+	zsh-autosuggestions
 	zsh-syntax-highlighting
 )
 
@@ -49,8 +43,17 @@ if [ -f '/Users/munjal/sdks/google-cloud-sdk/completion.zsh.inc' ]; then
 	source '/Users/munjal/sdks/google-cloud-sdk/completion.zsh.inc';
 fi
 
-export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
-fpath=(${ASDF_DATA_DIR:-$HOME/.asdf}/completions $fpath)
-autoload -Uz compinit && compinit
+# mise - runtime version manager (replaces asdf)
+eval "$(mise activate zsh)"
 
+# zoxide - smarter cd
+eval "$(zoxide init zsh)"
+
+# fzf - fuzzy finder
+source <(fzf --zsh)
+
+# atuin - shell history
+eval "$(atuin init zsh)"
+
+# starship prompt (must be last)
 eval "$(starship init zsh)"

@@ -95,9 +95,10 @@ fi
 fancy_echo "Installing brew bundles..."
 brew bundle
 
-fancy_echo "Generating & configuringssh keys"
+fancy_echo "Generating & configuring ssh keys"
 gh auth login -s write:gpg_key,repo
 
+# GPG Setup (traditional method - keep for GPG signing if preferred)
 if [ ! -f "$HOME/.gnupg/gpg-agent.conf" ]
 then
     fancy_echo "Creating gpg-agent conf file"
@@ -112,36 +113,85 @@ then
     fancy_echo "test: echo "test" | gpg --clearsign"
 fi
 
+# 1Password SSH Agent Setup (modern alternative to GPG)
+fancy_echo "Setting up 1Password SSH Agent..."
+fancy_echo "To use 1Password for SSH and Git signing:"
+fancy_echo "1. Enable SSH Agent in 1Password Settings > Developer"
+fancy_echo "2. Add your SSH keys to 1Password"
+fancy_echo "3. Uncomment SSH_AUTH_SOCK in ~/.zshenv"
+fancy_echo "4. Configure ~/.ssh/config with:"
+cat << 'EOF'
+
+Host *
+    IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+
+EOF
+
+# Create SSH config if it doesn't exist
+if [ ! -f "$HOME/.ssh/config" ]
+then
+    mkdir -p $HOME/.ssh
+    cat << 'EOF' > $HOME/.ssh/config
+# Uncomment below to use 1Password SSH Agent
+# Host *
+#     IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+EOF
+    chmod 600 $HOME/.ssh/config
+fi
+
+# Oh-My-Zsh plugins
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
-fancy_echo "Installing asdf"
-mkdir -p "${ASDF_DATA_DIR:-$HOME/.asdf}/completions"
-asdf completion zsh > "${ASDF_DATA_DIR:-$HOME/.asdf}/completions/_asdf"
+# Ghostty terminal configuration
+fancy_echo "Setting up Ghostty terminal configuration..."
+mkdir -p $HOME/.config/ghostty
+if [ ! -f "$HOME/.config/ghostty/config" ]
+then
+    cat << 'EOF' > $HOME/.config/ghostty/config
+font-family = JetBrains Mono
+font-size = 14
+theme = catppuccin-mocha
+window-padding-x = 12
+window-padding-y = 8
+cursor-style = block
+shell-integration = zsh
+confirm-close-surface = false
+macos-option-as-alt = true
+EOF
+    fancy_echo "Created Ghostty config at ~/.config/ghostty/config"
+fi
 
-find_latest_asdf() {
-    asdf list all "$1" | grep -v - | sed -e 's/\([0-9|\.]*\).*/\1/' | sed -e '/^$/ d' |tail -1
-}
-asdf_plugin_present() {
-    asdf plugin list | grep -q "$1"
+# mise - runtime version manager (replaces asdf)
+fancy_echo "Setting up mise..."
+
+# mise reads existing .tool-versions files, so migration is seamless
+# If you have a global .tool-versions, mise will use it automatically
+
+find_latest_mise() {
+    mise ls-remote "$1" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | tail -1
 }
 
-install_asdf_plugin() {
-    plugin_version=$(find_latest_asdf "$1")
-    fancy_echo "Installing $1 $plugin_version"
-    asdf install "$1" "$plugin_version"
+install_mise_tool() {
+    tool_version=$(find_latest_mise "$1")
+    fancy_echo "Installing $1 $tool_version"
+    mise install "$1@$tool_version"
+    mise use -g "$1@$tool_version"
 }
-
-fancy_echo "Adding asdf plugins"
-asdf_plugin_present ruby || asdf plugin add https://github.com/asdf-vm/asdf-ruby.git
-asdf_plugin_present erlang || asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git
-asdf_plugin_present elixir || asdf plugin add elixir https://github.com/asdf-vm/asdf-elixir.git
 
 ulimit -n 4096
 
-fancy_echo "Installing asdf plugins"
-
+fancy_echo "Installing runtimes with mise..."
 export KERL_CONFIGURE_OPTIONS="--without-javac --with-ssl=$(brew --prefix openssl@3)"
-install_asdf_plugin erlang
-install_asdf_plugin elixir
-install_asdf_plugin ruby
+install_mise_tool erlang
+install_mise_tool elixir
+install_mise_tool ruby
+install_mise_tool node
+
+fancy_echo "Setting up fzf keybindings..."
+$(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc --no-bash --no-fish
+
+fancy_echo "Installing Claude Code CLI..."
+mise exec node -- npm install -g @anthropic-ai/claude-code
+
+fancy_echo "Setup complete! Restart your terminal or run: source ~/.zshrc"

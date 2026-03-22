@@ -77,3 +77,18 @@
     signingkey = C75C745A97C9C9E3
 [diff]
 	tool = opendiff
+
+# ============================================
+# 1Password SSH Signing (alternative to GPG)
+# ============================================
+# To switch from GPG to SSH signing with 1Password:
+# 1. Enable SSH Agent in 1Password Settings > Developer
+# 2. Add your SSH key to 1Password
+# 3. Uncomment the lines below and comment out gpgsign above
+#
+# [gpg]
+#     format = ssh
+# [gpg "ssh"]
+#     program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+# [user]
+#     signingkey = ssh-ed25519 YOUR_PUBLIC_KEY_HERE

@@ -1,6 +1,6 @@
 brew_bin_path="$(brew --prefix)/bin"
 
-alias brewup='brew update; brew upgrade; brew prune; brew cleanup; brew doctor'
+alias brewup='brew update; brew upgrade; brew cleanup; brew doctor'
 alias vi="$brew_bin_path/vim"
 alias diff="git difftool -y -w --diff-filter=ACMRTUXB"
 alias fdiff="git diff --color | diff-so-fancy"
@@ -14,7 +14,16 @@ alias reload="source ~/.zshrc"
 alias rwifi='networksetup -setairportpower en0 off && networksetup -setairportpower en0 on'
 alias kube=kubectl
 
-alias fz='find * -type f | fzf'
+# Modern replacements
+alias ls='eza'
+alias ll='eza -l --git'
+alias la='eza -la --git'
+alias lt='eza --tree --level=2'
+alias cat='bat'
+alias fz='fd --type f | fzf'
+
+# Quick navigation with zoxide
+alias cd='z'
 
 alias emd='/Applications/Emacs.app/Contents/MacOS/Emacs --daemon'
 alias em='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait'

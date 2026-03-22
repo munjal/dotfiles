@@ -1,0 +1,26 @@
+font-family = JetBrains Mono
+font-size = 14
+theme = catppuccin-mocha
+window-padding-x = 12
+window-padding-y = 8
+cursor-style = block
+shell-integration = zsh
+confirm-close-surface = false
+macos-option-as-alt = true
+
+# ProMotion display support (120Hz)
+# Ghostty automatically uses Metal for rendering
+
+# Native macOS integration
+macos-titlebar-style = native
+
+# Window behavior
+window-decoration = true
+window-save-state = always
+
+# Clipboard
+clipboard-read = allow
+clipboard-write = allow
+
+# Scrollback
+scrollback-limit = 10000
